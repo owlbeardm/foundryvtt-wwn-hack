@@ -31,7 +31,7 @@ export const WWN = {
     notice: "WWN.skills.notice",
     perform: "WWN.skills.perform",
     pray: "WWN.skills.pray",
-    punch: "WWN.skills.punch",
+    brawl: "WWN.skills.brawl",
     ride: "WWN.skills.ride",
     sail: "WWN.skills.sail",
     shoot: "WWN.skills.shoot",

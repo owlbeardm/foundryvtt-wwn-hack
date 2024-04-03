@@ -880,20 +880,28 @@ export class WwnActor extends Actor {
     const data = this.system;
 
     // Compute AC
-    let baseAac = 10;
+    let baseAac = 10 + data.scores.dex.mod + data.scores.str.mod + data.aac.mod;
+    let soak = 0;
     let AacShieldMod = 0;
     let AacShieldNaked = 0;
-    let naked = baseAac + data.scores.dex.mod + data.aac.mod;
+    let naked = baseAac;
     let exertPenalty = 0;
     let sneakPenalty = 0;
+
+    const brawl = this.items.filter((i) => i.type == "skill" && i.name == "Brawl");
+      if(brawl.length == 0) {baseAac -=1;}
+      else {baseAac += brawl[0].system.ownedLevel;}
 
     const armors = this.items.filter((i) => i.type == "armor");
     armors.forEach((a) => {
       if (!a.system.equipped) {
         return;
       }
+      soak += a.system.aac.value;  
       if (a.system.type != "shield") {
-        baseAac = Number(a.system.aac.value) + a.system.aac.mod;
+        if(a.system.weight > 0) {
+          baseAac -= Number(a.system.weight);
+        }
         // Check if armor is medium or heavy and apply appropriate Sneak/Exert penalty
         if (a.system.type === "medium" && a.system.weight > sneakPenalty) {
           sneakPenalty = a.system.weight;
@@ -906,31 +914,20 @@ export class WwnActor extends Actor {
         }
       } else if (a.system.type == "shield") {
         AacShieldMod = 1 + a.system.aac.mod;
-        AacShieldNaked = Number(a.system.aac.value) + a.system.aac.mod;
       }
     });
     if (AacShieldMod > 0) {
-      let shieldOnly = AacShieldNaked + data.scores.dex.mod + data.aac.mod;
-      let shieldBonus =
-        baseAac + data.scores.dex.mod + data.aac.mod + AacShieldMod;
-      if (shieldOnly > shieldBonus) {
-        this.system.aac = {
-          value: shieldOnly,
-          shield: 0,
-          naked,
-          mod: data.aac.mod,
-        };
-      } else {
-        this.system.aac = {
-          value: shieldBonus,
-          shield: AacShieldMod,
-          naked,
-          mod: data.aac.mod,
-        };
-      }
+      this.system.aac = {
+        value: baseAac + AacShieldMod,
+        soak,
+        shield: AacShieldMod,
+        naked,
+        mod: data.aac.mod,
+      };
     } else {
       this.system.aac = {
-        value: baseAac + data.scores.dex.mod + data.aac.mod,
+        value: baseAac, 
+        soak,
         naked,
         shield: 0,
         mod: data.aac.mod,
@@ -1071,7 +1068,7 @@ export class WwnActor extends Actor {
       "notice",
       "perform",
       "pray",
-      "punch",
+      "brawl",
       "ride",
       "sail",
       "shoot",

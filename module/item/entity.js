@@ -125,7 +125,7 @@ export class WwnItem extends Item {
       !poly ||
       skillName == "Shoot" ||
       skillName == "Stab" ||
-      skillName == "Punch"
+      skillName == "Brawl"
     ) {
       skillLevel = data.ownedLevel;
     } else {
