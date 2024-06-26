@@ -39,8 +39,8 @@
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-      <a class="item" data-tab="description">{{localize "WWN.category.description"}}</a>
-      <a class="item" data-tab="effects">{{localize "WWN.Effects"}}</a>
+    <a class="item" data-tab="description">{{localize "WWN.category.description"}}</a>
+    <a class="item" data-tab="effects">{{localize "WWN.Effects"}}</a>
   </nav>
 
   <section class="sheet-body">
@@ -59,14 +59,17 @@
             </div>
           </div>
           <div class="form-group">
+            <label>Personal</label>
+            <div class="form-fields">
+              <input type="checkbox" name="system.personal" value="{{system.personal}}" {{checked system.personal}}
+                data-dtype="Boolean" />
+            </div>
+          </div>
+          <div class="form-group">
             <label>{{localize "WWN.items.WeightlessLabel"}}</label>
             <div class="form-fields">
               <select name="system.weightless">
-                {{#select system.weightless}}
-                {{#each config.weightless as |wt a|}}
-                <option value="{{a}}">{{wt}}</option>
-                {{/each}}
-                {{/select}}
+                {{selectOptions config.weightless selected=system.weightless localize=true}}
               </select>
             </div>
           </div>
@@ -84,9 +87,9 @@
         </div>
       </div>
     </div>
-      {{!-- Active Effects Tab --}}
+    {{!-- Active Effects Tab --}}
     <div class="tab effects flexcol" data-group="primary" data-tab="effects">
-        {{> "systems/wwn/templates/items/partials/item-effects.html"}}
+      {{> "systems/wwn/templates/items/partials/item-effects.html"}}
     </div>
   </section>
 </form>
