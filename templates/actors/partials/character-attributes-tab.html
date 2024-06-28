@@ -150,20 +150,6 @@
             title="{{ localize 'WWN.HealthMax' }}" />
         </div>
       </li>
-      <li class="attribute ability-score">
-        <h4 class="attribute-name box-title" title="{{ localize 'WWN.ArmorClass' }}">
-          {{ localize "WWN.ArmorClassShort" }}
-        </h4>
-        <div class="attribute-value">
-          <input name="system.aac.value" type="number" value="{{system.aac.value}}" data-dtype="Number" placeholder=0
-            title="{{ localize 'WWN.ArmorClass' }}" disabled />
-        </div>
-        <div class="attribute-value attribute-mod">
-          <input name="system.aac.naked" type="number" value="{{system.aac.naked}}" data-dtype="Number" placeholder=0
-            title="{{ localize 'WWN.ArmorClassNaked' }}" disabled />
-        </div>
-      </li>
-
       {{#if config.replaceStrainWithWounds}}
       <li class="attribute ability-score">
         <h4 class="attribute-name box-title"
