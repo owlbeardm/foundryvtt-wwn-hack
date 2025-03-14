@@ -58,7 +58,8 @@
         "initiative": {
           "value": 0,
           "mod": 0,
-          "roll": 0
+          "roll": "1d8",
+          "alertTwo": false
         },
         "currency": {
           "cp": 0,
@@ -309,7 +310,7 @@
       "description": "",
       "quantity": 1,
       "treasure": false,
-      "personal": true,
+      "personal": false,
       "price": 0,
       "weight": 0,
       "weightless": "",
